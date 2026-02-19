@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard Manager for Windows – User Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4f8;
+            color: #1e2b3a;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        .manual {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0,20,40,0.25);
+            overflow: hidden;
+            border: 1px solid #d9e2ec;
+        }
+        header {
+            background: linear-gradient(145deg, #0f3b4f, #1a4e68);
+            color: white;
+            padding: 2.5rem 2.5rem 2rem;
+        }
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        header h1 span {
+            background: #f6b83e;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            color: #0b2b40;
+        }
+        .version {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            margin-top: 0.5rem;
+        }
+        .toc {
+            background: #eaf0f6;
+            padding: 1.8rem 2.5rem;
+            border-bottom: 1px solid #cbd6e3;
+        }
+        .toc h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #1d3f55;
+        }
+        .toc-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2.5rem;
+        }
+        .toc-grid a {
+            text-decoration: none;
+            color: #1f5170;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .toc-grid a:hover {
+            border-bottom-color: #f6b83e;
+            color: #0b2b40;
+        }
+        /* two‑column layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+            padding: 2.5rem;
+        }
+        .content-left {
+            overflow: hidden;
+        }
+        .screenshot-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 1rem;
+        }
+        section h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #0b2b40;
+            border-left: 6px solid #f6b83e;
+            padding-left: 1.2rem;
+            margin-bottom: 1.8rem;
+        }
+        section h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin: 1.8rem 0 1rem;
+            color: #1e3b4f;
+        }
+        .note {
+            background: #edf6fa;
+            border-left: 4px solid #2c7da0;
+            padding: 1rem 1.8rem;
+            border-radius: 0 16px 16px 0;
+            margin: 1.5rem 0;
+        }
+        ul, ol {
+            padding-left: 1.8rem;
+            margin: 1rem 0;
+        }
+        li {
+            margin: 0.4rem 0;
+        }
+        kbd {
+            background: #f3f3f3;
+            border: 1px solid #c0c7cf;
+            border-radius: 6px;
+            padding: 0.2rem 0.6rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            box-shadow: 0 2px 0 #aab3bc;
+            display: inline-block;
+        }
+        .screenshot {
+            background: #f1f5f9;
+            border-radius: 24px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 2px solid #d4e0ec;
+        }
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 16px;
+            border: 1px solid #b0c4d9;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+        .screenshot figcaption {
+            margin-top: 0.7rem;
+            color: #3a5a78;
+            font-weight: 450;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f8fafc;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px #dee7f0;
+            margin: 2rem 0;
+        }
+        th {
+            background: #1d3f55;
+            color: white;
+            font-weight: 500;
+            padding: 0.8rem 1rem;
+            text-align: left;
+        }
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #cbdae8;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .hotkey-box {
+            background: #fbf3d5;
+            border-radius: 16px;
+            padding: 1.2rem 2rem;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #1e7e34;
+            color: white;
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            margin: 1rem 0 0.5rem;
+            border: 2px solid #146c2a;
+            box-shadow: 0 4px 8px rgba(0,60,0,0.2);
+            transition: 0.2s;
+        }
+        .download-btn:hover {
+            background: #146c2a;
+            transform: scale(1.02);
+        }
+        .sidebar-download {
+            margin-top: -1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        footer {
+            background: #eaf0f6;
+            padding: 1.8rem 2.5rem;
+            text-align: center;
+            color: #2f4b66;
+            font-size: 0.95rem;
+            border-top: 1px solid #cbd6e3;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #dde5ef;
+            margin: 2rem 0;
+        }
+        /* responsive */
+        @media (max-width: 800px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="manual">
+    <header>
+        <h1>📋 <span style="color: red;background-color: rgba(0,0,0,0.00);font-size: 70px; font-weight: bold;">CB</span> Clipboard Manager <span>for Windows</span></h1>
+        <div class="version">Version 1.0 · with pin, search, edit & auto‑paste</div>
+        <p style="max-width: 700px; font-size: 1.1rem; opacity: 0.9;">Never lose a copy again. Save, organise, and reuse everything you copy – text only, but with powerful tools.</p>
+    </header>
+
+    <div class="toc">
+        <h2>📖 Contents</h2>
+        <div class="toc-grid">
+            <a href="#intro">1. Introduction</a>
+            <a href="#install">2. Installation (Windows)</a>
+            <a href="#start">3. Getting started</a>
+            <a href="#history">4. Clipboard history</a>
+            <a href="#favorites">5. Pinning favorites</a>
+            <a href="#search">6. Search</a>
+            <a href="#edit">7. Editing clips</a>
+            <a href="#export">8. Export / Import JSON</a>
+            <a href="#autopaste">9. Auto‑paste</a>
+            <a href="#settings">10. Settings</a>
+            <a href="#trouble">11. Troubleshooting</a>
+            <a href="#about">12. About & contact</a>
+        </div>
+    </div>
+
+    <!-- two‑column main area -->
+    <div class="main-grid">
+        <!-- LEFT COLUMN: all textual sections -->
+        <div class="content-left">
+            <!-- 1. Introduction -->
+            <section id="intro">
+                <h2>1. Introduction</h2>
+                <p><strong>Clipboard Manager</strong> is a lightweight Windows utility that remembers everything you copy. It stores text snippets in a searchable history, lets you pin favourites, edit saved items, and even auto‑paste them with a configurable key (Enter or Tab). The window stays on top and docks to the <strong>right edge of your screen</strong> for quick access.</p>
+                <!-- screenshot removed from here, moved to sidebar -->
+            </section>
+
+            <!-- 2. Installation (Windows) -->
+            <section id="install">
+                <h2>2. Installation (Windows)</h2>
+                <ol>
+                    <li>Download the <strong>ClipBoard_Manager.exe</strong> using the button below or from the sidebar.</li>
+                    <li>Place it anywhere (e.g., Desktop or Program Files).</li>
+                    <li>Double‑click to launch – no installation needed.</li>
+                </ol>
+                <p>The program creates a folder <code>.clipboard_manager</code> in your user directory to store history and settings.</p>
+                <a href="ClipBoard_Manager.exe" class="download-btn" download>⬇ Download ClipBoard_Manager.exe</a>
+                <p style="font-size:0.9rem; margin-top:0.5rem;">(click to download – ~60 MB)</p>
+            </section>
+
+            <!-- 3. Getting started -->
+            <section id="start">
+                <h2>3. Getting started</h2>
+                <ul>
+                    <li><strong>Launch:</strong> Run the .exe – a small window appears on the <strong>right side of your screen</strong>, always on top.</li>
+                    <li><strong>Copy normally:</strong> Select any text and press <kbd>Ctrl+C</kbd>. The text is added to the top of the list.</li>
+                    <li><strong>Paste an old item:</strong> Double‑click any entry – it is copied to the clipboard and automatically pasted at the cursor position, followed by <kbd>Enter</kbd> or <kbd>Tab</kbd> (configurable).</li>
+                    <li><strong>Close:</strong> Press <kbd>Alt+F4</kbd> or use File → Exit.</li>
+                </ul>
+            </section>
+
+            <!-- 4. Clipboard history -->
+            <section id="history">
+                <h2>4. Clipboard history</h2>
+                <p>All copied texts are stored in a list, newest first. Each row shows:</p>
+                <ul>
+                    <li><strong>Sr.No</strong> – display order (after search and pin).</li>
+                    <li><strong>📌 column</strong> – a pin icon appears if the item is favourited.</li>
+                    <li><strong>Clipboard text</strong> – first 80 characters (full text shown in a tooltip on hover).</li>
+                </ul>
+                <p>The history is automatically saved to <code>%userprofile%\.clipboard_manager\history.json</code>.</p>
+            </section>
+
+            <!-- 5. Pinning favorites -->
+            <section id="favorites">
+                <h2>5. Pinning favorites</h2>
+                <p>Keep important clips (addresses, signatures, code snippets) always at the top of the list.</p>
+                <ol>
+                    <li>Right‑click an item and choose <strong>Pin/Unpin</strong>.</li>
+                    <li>Pinned items show a 📌 icon and appear above unpinned ones, even when you search.</li>
+                    <li>Pin status is saved and restored next time you start the app.</li>
+                </ol>
+            </section>
+
+            <!-- 6. Search -->
+            <section id="search">
+                <h2>6. Search & filter</h2>
+                <p>Use the search box above the list to instantly filter your history.</p>
+                <ul>
+                    <li>Type any word (case‑insensitive) – only items containing that text remain visible.</li>
+                    <li>Click the <strong>×</strong> button to clear the search.</li>
+                    <li>Pinned items matching the search still appear before unpinned ones.</li>
+                </ul>
+            </section>
+
+            <!-- 7. Editing clips -->
+            <section id="edit">
+                <h2>7. Editing clips</h2>
+                <p>You can modify any saved text directly within the application.</p>
+                <ol>
+                    <li>Right‑click an item and select <strong>Edit</strong>.</li>
+                    <li>An edit window opens, positioned to the left of the main window (or right if left side is off‑screen).</li>
+                    <li>Change the text and click <strong>Save</strong> – the history updates immediately.</li>
+                </ol>
+                <!-- screenshot removed from here, moved to sidebar -->
+            </section>
+
+            <!-- 8. Export / Import JSON -->
+            <section id="export">
+                <h2>8. Export & Import JSON</h2>
+                <p>You can back up your entire history or share it with another computer using JSON files.</p>
+                <ul>
+                    <li><strong>Export:</strong> File → Export as JSON… → choose a location. The file contains a list of objects with <code>text</code> and <code>pinned</code> keys.</li>
+                    <li><strong>Import:</strong> File → Load JSON History… → select a JSON file (old plain string lists are also accepted).</li>
+                </ul>
+                <div class="note">
+                    ⚠️ Import replaces your current history. Make sure to export first if you want to keep it.
+                </div>
+            </section>
+
+            <!-- 9. Auto‑paste -->
+            <section id="autopaste">
+                <h2>9. Auto‑paste</h2>
+                <p>If you double‑click a history item, the following happens:</p>
+                <ol>
+                    <li>Copy the text to clipboard.</li>
+                    <li>Simulate <kbd>Ctrl+V</kbd> to paste it into the active window.</li>
+                    <li>Press <kbd>Enter</kbd> or <kbd>Tab</kbd> afterwards (configurable in Settings).</li>
+                </ol>
+                <p>This is perfect for quickly filling forms or inserting repeated text.</p>
+                <div class="hotkey-box">
+                    ⚡ <strong>Tip:</strong> If auto‑paste doesn’t work, ensure the target window is ready and that you haven’t disabled it in settings.
+                </div>
+            </section>
+
+            <!-- 10. Settings -->
+            <section id="settings">
+                <h2>10. Settings</h2>
+                <p>Currently only one setting is available: the key pressed after auto‑paste.</p>
+                <ul>
+                    <li>Go to <strong>Settings → After paste press key</strong> and choose <strong>Enter</strong> or <strong>Tab</strong>.</li>
+                    <li>The choice is saved in <code>config.json</code> inside the data folder.</li>
+                </ul>
+            </section>
+
+            <!-- 11. Troubleshooting -->
+            <section id="trouble">
+                <h2>11. Troubleshooting</h2>
+                <table>
+                    <thead><tr><th>Problem</th><th>Solution</th></tr></thead>
+                    <tbody>
+                        <tr><td>History not saved after restart</td><td>Check that <code>.clipboard_manager</code> folder exists in your user directory and is writable.</td></tr>
+                        <tr><td>Double‑click does nothing</td><td>Make sure an item is selected (highlighted). If the list is empty, copy something first.</td></tr>
+                        <tr><td>Window is off‑screen</td><td>The window always opens at the right edge. You can drag it, but it won’t remember position after restart.</td></tr>
+                        <tr><td>Can’t load JSON file</td><td>Verify the file is a valid JSON array (each item either a string or an object with <code>"text"</code>).</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 12. About & contact -->
+            <section id="about">
+                <h2>12. About & contact</h2>
+                <p><strong>Clipboard Manager</strong> was developed by <strong>Ajay Kumar</strong> to boost everyday productivity. The application is free and open‑source.</p>
+                <ul>
+                    <li><strong>UPI (support):</strong> <code>ajaynpcil@oksbi</code></li>
+                    <li><strong>Email:</strong> <a href="mailto:ajaynpcil@gmail.com">ajaynpcil@gmail.com</a> </li>
+                </ul>
+                <p>For bug reports, feature requests, or just to say thanks, drop an email. We’d love to hear from you!</p>
+                <hr>
+                <p style="text-align: center;">📌 Version 1.0 – February 2026</p>
+            </section>
+        </div>
+
+        <!-- RIGHT COLUMN: all screenshots stacked vertically + download link -->
+        <div class="screenshot-sidebar">
+            <!-- extra download button in sidebar for visibility -->
+            <div class="sidebar-download">
+                <a href="ClipBoard_Manager.exe" class="download-btn" download>⬇ Download .exe</a>
+            </div>
+            <figure class="screenshot">
+                <img src="screenshot_main.jpg" alt="Main window of Clipboard Manager positioned on the right side">
+                <figcaption>Main window – positioned on the right side of the screen, showing history list with serial numbers and pin icons</figcaption>
+            </figure>
+            <figure class="screenshot">
+                <img src="screenshot_edit.jpg" alt="Edit window with sample text">
+                <figcaption>Edit window – attached to the left of the main app</figcaption>
+            </figure>
+            </figure>
+            <figure class="screenshot">
+                <img src="upi.jpg" alt="You can support to pay $">
+                <figcaption>Scan & support</figcaption>
+            </figure>
+            <!-- additional screenshots can be added here later -->
+        </div>
+    </div>
+
+    <footer>
+        © 2026 Ajay Kumar · Clipboard Manager for Windows · User Manual
+    </footer>
+</div>
+</body>
+</html>
